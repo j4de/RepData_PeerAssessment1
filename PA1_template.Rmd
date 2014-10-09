@@ -56,7 +56,44 @@ paste( "Interval containing max steps across all the days:",act_interval[act_int
 ```
 
 ## Imputing missing values
+1. Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NAs)
 
+```{r}
+missingvaluecount <- nrow(act) - nrow(act[!is.na(act$steps),])
+paste("Total number of missing values (rows with NAs):", missingvaluecount)
+```
+
+2. Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.
+```{r}
+## Fill in the missing values with the mean of the relevant 5-minute interval
+## note that the end resulting steps column will be of type num (not int) due to the mean value
+act$interval <- as.factor(act$interval)
+act_interval$interval <- as.factor(act_interval$interval)
+act_merged <- merge( x=act, y=act_interval, by.x="interval", by.y="interval", all.x=TRUE )
+## steps.x is the old steps value or NA, steps.y is the mean value
+## we only need the y value if x == NA
+act_merged$steps <- ifelse(is.na(act_merged$steps.x), act_merged$steps.y, act_merged$steps.x)
+```
+
+3. Create a new dataset that is equal to the original dataset but with the missing data filled in.
+```{r}
+## we can now drop the x and y values as we have a correct steps column value
+drops <- c("steps.x","steps.y")
+act <- act_merged[,!(names(act_merged) %in% drops)]
+```
+
+4. Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
+```{r}
+## remove 'na' rows from our dataset by subsetting
+act_nonas <- act[!is.na(act$steps),]
+## get total number to steps per day for histogram puposes
+act_totsteps <- aggregate(steps ~ date, data=act_nonas, FUN="sum")
+hist(act_totsteps$steps, xlab="Steps", main="Total number of steps taken each day")
+## get mean number of steps per day
+paste( "Mean number of steps per day:",mean(act_totsteps$steps))
+## get median number of steps per day
+paste( "Median number of steps per day:",median(act_totsteps$steps))
+```
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
