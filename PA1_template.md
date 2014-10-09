@@ -60,7 +60,23 @@ paste( "Median number of steps per day:",median(act_totsteps$steps))
 
 ## What is the average daily activity pattern?
 
+```r
+## get average number of steps taken across all days for each interval
+act_interval <- aggregate(steps ~ interval, data=act_nonas, FUN="mean")
+## show plot of avg number of steps taken per interval
+plot(act_interval$interval, act_interval$steps, type="l", main="Average number of Steps taken per Interval", xlab="Interval", ylab="Steps")
+```
 
+![plot of chunk unnamed-chunk-3](./PA1_template_files/figure-html/unnamed-chunk-3.png) 
+
+```r
+## which 5-min interval on average across all the days contains the maximum number of steps
+paste( "Interval containing max steps across all the days:",act_interval[act_interval$steps==max(act_interval$steps),"interval"])
+```
+
+```
+## [1] "Interval containing max steps across all the days: 835"
+```
 
 ## Imputing missing values
 
@@ -72,6 +88,6 @@ paste( "Median number of steps per day:",median(act_totsteps$steps))
 
 You can also embed plots, for example:
 
-![plot of chunk unnamed-chunk-3](./PA1_template_files/figure-html/unnamed-chunk-3.png) 
+![plot of chunk unnamed-chunk-4](./PA1_template_files/figure-html/unnamed-chunk-4.png) 
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
