@@ -1,9 +1,4 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
----
+# Reproducible Research: Peer Assessment 1
 
 This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
@@ -23,7 +18,8 @@ This assignment makes use of data from a personal activity monitoring device. Th
 :
 
 ## Loading and preprocessing the data
-```{r}
+
+```r
 setwd("~/Github/RepData_PeerAssessment1")
 ## Load the activity.csv file into memory
 act <- read.csv( "activity.csv", header=T)
@@ -33,16 +29,33 @@ act$date <- as.Date(act$date,"%Y-%m-%d")
 
 
 ## What is mean total number of steps taken per day?
-```{r}
+
+```r
 ## remove 'na' rows from our dataset by subsetting
 act_nonas <- act[!is.na(act$steps),]
 ## get total number to steps per day for histogram puposes
 act_totsteps <- aggregate(steps ~ date, data=act_nonas, FUN="sum")
 hist(act_totsteps$steps, xlab="Steps", main="Total number of steps taken each day")
+```
+
+![plot of chunk unnamed-chunk-2](./PA1_template_files/figure-html/unnamed-chunk-2.png) 
+
+```r
 ## get mean number of steps per day
 paste( "Mean number of steps per day:",mean(act_totsteps$steps))
+```
+
+```
+## [1] "Mean number of steps per day: 10766.1886792453"
+```
+
+```r
 ## get median number of steps per day
 paste( "Median number of steps per day:",median(act_totsteps$steps))
+```
+
+```
+## [1] "Median number of steps per day: 10765"
 ```
 
 ## What is the average daily activity pattern?
@@ -59,8 +72,6 @@ paste( "Median number of steps per day:",median(act_totsteps$steps))
 
 You can also embed plots, for example:
 
-```{r, echo=FALSE}
-plot(cars)
-```
+![plot of chunk unnamed-chunk-3](./PA1_template_files/figure-html/unnamed-chunk-3.png) 
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
