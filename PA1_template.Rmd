@@ -86,7 +86,7 @@ act <- act_merged[,!(names(act_merged) %in% drops)]
 ```
 
 4. Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
-```{r, echo=FALSE}
+```{r}
 ## remove 'na' rows from our dataset by subsetting
 act_nonas <- act[!is.na(act$steps),]
 ## get total number to steps per day for histogram puposes
@@ -106,7 +106,7 @@ data.
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
-```{r, echo=FALSE}
+```{r}
 ## determine the type of day as being a weekday or weekend day.
 act_nonas$daytype <- ifelse(!weekdays(as.Date(act_nonas$date)) %in% c("Saturday", "Sunday"),
        "weekday","weekend")
@@ -133,7 +133,7 @@ xyplot(steps~interval|daytype,data=act_daytypes,type="l",layout=c(1,2),
 
 Visually there would appear to be more activity on average at the weekends than during the weekdays and this is found to be true if we calculate the averages themselves:-
 
-```{r, echo=FALSE}
+```{r}
 ## show mean weekday steps
 paste("Mean weekday steps:",mean(act_wkday$steps))
 ## show mean weekend steps
