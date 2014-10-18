@@ -64,7 +64,7 @@ paste( "Median number of steps per day:",median(act_totsteps$steps))
 ## get average number of steps taken across all days for each interval
 act_interval <- aggregate(steps ~ interval, data=act_nonas, FUN="mean")
 ## show plot of avg number of steps taken per interval
-plot(act_interval$interval, act_interval$steps, type="l", main="Average number of Steps taken per Interval", xlab="Interval", ylab="Steps")
+plot(act_interval$interval, act_interval$steps, type="l", main="Average number of Steps taken per Interval", xlab="Steps", ylab="Interval")
 ```
 
 ![plot of chunk unnamed-chunk-3](./PA1_template_files/figure-html/unnamed-chunk-3.png) 
@@ -142,13 +142,23 @@ paste( "Median number of steps per day:",median(act_totsteps$steps))
 ## [1] "Median number of steps per day: 10766.1886792453"
 ```
 
+As you can see by imputing the data both the mean and median are now equal whereas with the 
+previously non-imputed data the median was slightly lower, the mean has not changed.
+
+Also note that the 'Frequency' axis has increased from 25 to 35 to account for the extra imputed
+data.
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
-
-
-You can also embed plots, for example:
-
 ![plot of chunk unnamed-chunk-8](./PA1_template_files/figure-html/unnamed-chunk-8.png) 
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+Visually there would appear to be more activity on average at the weekends than during the weekdays and this is found to be true if we calculate the averages themselves:-
+
+
+```
+## [1] "Mean weekday steps: 35.6105811786629"
+```
+
+```
+## [1] "Mean weekend steps: 42.366401336478"
+```
