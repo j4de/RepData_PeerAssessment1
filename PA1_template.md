@@ -93,6 +93,9 @@ paste("Total number of missing values (rows with NAs):", missingvaluecount)
 
 2. Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.
 
+The stategy used will be to use the mean steps per interval to imput the missing data.
+
+
 ```r
 ## Fill in the missing values with the mean of the relevant 5-minute interval
 ## note that the end resulting steps column will be of type num (not int) due to the mean value
@@ -113,29 +116,10 @@ act <- act_merged[,!(names(act_merged) %in% drops)]
 ```
 
 4. Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
-
-```r
-## remove 'na' rows from our dataset by subsetting
-act_nonas <- act[!is.na(act$steps),]
-## get total number to steps per day for histogram puposes
-act_totsteps <- aggregate(steps ~ date, data=act_nonas, FUN="sum")
-hist(act_totsteps$steps, xlab="Steps", main="Total number of steps taken each day")
-```
-
 ![plot of chunk unnamed-chunk-7](./PA1_template_files/figure-html/unnamed-chunk-7.png) 
-
-```r
-## get mean number of steps per day
-paste( "Mean number of steps per day:",mean(act_totsteps$steps))
-```
 
 ```
 ## [1] "Mean number of steps per day: 10766.1886792453"
-```
-
-```r
-## get median number of steps per day
-paste( "Median number of steps per day:",median(act_totsteps$steps))
 ```
 
 ```

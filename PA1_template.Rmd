@@ -119,35 +119,14 @@ act_daytypes <- aggregate(steps ~ daytype + interval, data=act_nonas, FUN="mean"
 act_wkday <- act_daytypes[act_daytypes$daytype=="weekday",]
 act_weday <- act_daytypes[act_daytypes$daytype=="weekend",]
 # define the plot presentation area (1 row by 1 col)
-par(mfrow=c(2,1),mar=c(1,4,4,1))
+par(mfrow=c(1,1),mar=c(5,4,4,5))
 
-# determine the min/max y value for Sub_metering across the 3 datasets for ylim
-miny <- min(act_wkday$steps,act_weday$steps)
-maxy <- max(act_wkday$steps,act_weday$steps)
 
-# draw the empty plot base
-plot(x=act_wkday$interval,y=act_wkday$steps,
-     xlab="Steps", 
-     xaxis="n",
-     ylim=c(miny,maxy),
-     ylab="WeekDay Interval", 
-     main="Differences in Mean Activity Patterns between Weekdays and Weekends"
-     ) 
+library(lattice)
+xyplot(steps~interval|daytype,data=act_daytypes,type="l",layout=c(1,2),
+       main="Differences in Mean Activity Patterns between Weekdays and Weekends", xlab="Interval", ylab="Steps", xlim=c(0,288))
 
-# add the lines to the plot
-lines(x=act_wkday$interval, act_wkday$steps, type="l", col="blue")
 
-par(mar=c(4,4,1,1))
-
-# draw the empty plot base
-plot(x=act_weday$interval,y=act_weday$steps,
-     xlab="Steps", 
-     ylim=c(miny,maxy),
-     ylab="WeekEnd Interval", 
-     ) 
-
-# add the lines to the plot
-lines(x=act_weday$interval, act_weday$steps, type="l", col="red")
 
 
 ```
